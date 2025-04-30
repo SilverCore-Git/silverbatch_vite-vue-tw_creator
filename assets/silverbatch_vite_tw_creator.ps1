@@ -82,7 +82,6 @@ export default defineConfig({
 npm install vue-router
 
 # Router
-New-Item -ItemType Directory -Path "src/router" -Force
 @"
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
@@ -97,7 +96,7 @@ const router = createRouter({
 })
 
 export default router
-"@ | Set-Content -Path "src/router/index.ts"
+"@ | Set-Content -Path "src/router.ts"
 
 # Vue Home
 New-Item -ItemType Directory -Path "src/views" -Force
@@ -243,7 +242,7 @@ New-Item -ItemType Directory -Path "src/components" -Force
 @"
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './router.ts'
 import './style.css'
 
 const app = createApp(App)
