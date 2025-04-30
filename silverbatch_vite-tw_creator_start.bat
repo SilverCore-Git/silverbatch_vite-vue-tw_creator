@@ -10,4 +10,8 @@ set "PS1_PATH=assets/silverbatch_vite_tw_creator.ps1"
 powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1_PATH%"
 
 endlocal
+
+echo.
+echo.
+echo (Appuyez sur Entree pour fermer)
 pause
