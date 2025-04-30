@@ -12,6 +12,18 @@ Start-Sleep -Seconds 2
 Clear-Host
 
 
+Write-Host @"
+     ____ ___ _ __     _______ ____    ____    _  _____ ____ _   _
+    / ___|_ _| |\ \   / / ____|  _ \  | __ )  / \|_   _/ ___| | | |
+    \___ \| || | \ \ / /|  _| | |_) | |  _ \ / _ \ | || |   | |_| |
+     ___) | || |__\ V / | |___|  _ <  | |_) / ___ \| || |___|  _  |
+    |____/___|_____\_/  |_____|_| \_\ |____/_/   \_\_| \____|_| |_|
+"@
+Write-Host ""
+Write-Host ""
+
+Write-Host "Le chemin d'access ne dois pas se finir par un / ou un \ !"
+Write-Host ""
 
 $project_name = Read-Host "Nom du projet"
 $project_path = Read-Host "Chemin du dossier dans laquelle le projet se trouvera"
@@ -25,15 +37,46 @@ Read-Host "(Appuyez sur Entree pour continuer)"
 npm create vite@latest $project_name -- --template vue-ts
 Set-Location "$project_path\$project_name"
 
+# Installer les dépendances
 npm install
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+npm install -D tailwindcss @tailwindcss/vite postcss autoprefixer
 
-# Fichier style.css
+# Configuration de vite.config.ts pour inclure le plugin Tailwind CSS
 @"
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import tailwindcss from '@tailwindcss/vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+    tailwindcss(),
+  ],
+})
+"@ | Set-Content -Path "vite.config.ts"
+
+# ajout des credits dans index.html
+@"
+<!-- projet initialisé avec silverbatch => https://www.silvercore.fr -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+"@ | Set-Content -Path "index.html"
+
+# Fichier style.css avec importation de Tailwind CSS
+@"
+@import 'tailwindcss';
 "@ | Set-Content -Path "src/style.css"
 
 npm install vue-router
