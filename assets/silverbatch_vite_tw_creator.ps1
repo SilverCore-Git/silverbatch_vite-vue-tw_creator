@@ -16,7 +16,9 @@ $project_path = Read-Host "Chemin du dossier dans laquelle le projet se trouvera
 
 Set-Location $project_path
 
-Write-Host "`nInitialisation avec TypeScript + Vue...`n"
+Write-Host "`nInitialisation...`n"
+Write-Host "Veuillez bien choisir vue pour la compatibilité avec vue-router.`n`n"
+
 Read-Host "(Appuyez sur Entrée pour continuer)"
 
 npm create vite@latest $project_name -- --template vue-ts
@@ -25,17 +27,6 @@ Set-Location "$project_path\$project_name"
 npm install
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
-
-# Modifier tailwind.config.js
-@"
-module.exports = {
-  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
-"@ | Set-Content -Path "tailwind.config.js"
 
 # Fichier style.css
 @"
